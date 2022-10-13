@@ -3,6 +3,7 @@ const User=require('../models/User');
 const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 const nodemailer=require('nodemailer');
+const localStorage=require('localStorage');
 
 const getUsers=asyncHandler(async (req,res)=>{
     const users=await User.find({},'-password');
@@ -95,6 +96,7 @@ const loginUser=asyncHandler(async (req,res)=>{
     ,{
         expiresIn:"3d"
     })
+    localStorage.setItem("token",token);
     res.status(201).json({user,token})
 })
 
