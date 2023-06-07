@@ -8,21 +8,25 @@ const authRoute=require('./routes/auth');
 const productRoute=require('./routes/product');
 const orderRoute=require('./routes/order');
 const cartRoute=require('./routes/cart');
-// const port=process.env.PORT_COUSTOM || 3000;
-const port=process.env.PORT|| 3000;
+const port=process.env.PORT_COUSTOM || 3000;
+// const port=process.env.PORT|| 3000;
 
 const connectDB=require('./config/db');
 connectDB();
 
 app.use(express.json());
 
-const bp = require("body-parser");
-app.use(bp.json());
-app.use(bp.urlencoded({ extended: true }));
+
+const { verifyToken } = require("./middlewares/verifyToken");
+
 /*
 middleware (req,res,next)
 app.use(path,middleware)
 */
+
+app.get('/',verifyToken,(req,res)=>{
+    res.json("bruuuhhhhhh");
+})
 
 app.use('/api/user',userRoute);
 app.use('/api/auth',authRoute);
